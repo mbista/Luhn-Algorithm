@@ -1,26 +1,22 @@
-DECLARE @NumCheck VARCHAR (100);
+DECLARE @NPI VARCHAR (10);
 DECLARE @Index  INT = 1;
 DECLARE @CurNum INT = 0;
 DECLARE @LUHNID INT = 0;
 DECLARE @PrintSt VARCHAR(100);
-DECLARE @NumLength INT;
+
 --put in your NPI here.
-SET @NumCheck = '3589296655688971855'
+SET @NPI = '1407854771'
 
 
-SET @NumCheck = RTRIM(LTRIM(@NumCheck))
-SET @NumLength = LEN(@NumCheck)
+SET @NPI = RTRIM(LTRIM(@NPI))
+IF LEN(@NPI)!=10	
+	PRINT 'Not a proper modulus 10'
+IF ISNUMERIC(@NPI)=0	
+	PRINT 'Not a proper modulus 10'
 
-
-WHILE(@Index!=@NumLength+1)
+WHILE(@Index!=11)
 BEGIN
-	IF ISNUMERIC(@NumCheck)=0	
-	BEGIN
-		PRINT 'Not a proper modulus 10'
-		BREAK;
-	END
-
-	SET @CurNum = CAST (SUBSTRING(@NumCheck, @Index, 1) as INT)
+	SET @CurNum = CAST (SUBSTRING(@NPI, @Index, 1) as INT)
 	SET @CurNum = @CurNum *(
 		CASE
 			WHEN ((@Index-1)%2) = 0 THEN 2
@@ -31,16 +27,11 @@ BEGIN
 	SET @LUHNID += @CurNum;
 	SET @Index+=1;
 END
-
-SET @LUHNID += 24;
-SET @PrintSt = 
-CASE 
-	WHEN (@LUHNID%10= 0) THEN 'It''s a proper Mod 10'
-ELSE
-	'Not a proper modulus 10'
-END
+	SET @LUHNID += 24;
+	SET @PrintSt = 
+	CASE 
+		WHEN (@LUHNID%10= 0) THEN 'It''s a proper Mod 10'
+	ELSE
+		'Not a proper modulus 10'
+	END
 PRINT @PrintSt
-
-		
-
-

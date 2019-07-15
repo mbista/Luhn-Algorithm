@@ -10,9 +10,9 @@ SET @NPI = '1407854771'
 
 SET @NPI = RTRIM(LTRIM(@NPI))
 IF LEN(@NPI)!=10	
-	PRINT 'Not a proper modulus 10'
+	PRINT 'Not a proper NPI'
 IF ISNUMERIC(@NPI)=0	
-	PRINT 'Not a proper modulus 10'
+	PRINT 'Not a proper NPI'
 
 WHILE(@Index!=11)
 BEGIN
